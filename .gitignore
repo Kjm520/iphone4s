@@ -29,3 +29,4 @@ desktop.ini
 # SSH
 ssh_config
 /ssh_config
+/.ssh
