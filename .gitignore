@@ -1,0 +1,31 @@
+# --- regenerable toolchain (tools/setup_toolchain.py rebuilds all of it) ---
+toolchain/
+
+# --- tile archive: multi-GB, far beyond git's comfort; keep it backed up
+#     on disk, regenerable via tools/harvest_tiles.py (resumable) ----------
+tiles/
+*.mbtiles
+*.mbtiles-wal
+*.mbtiles-shm
+
+# --- build outputs (builds run on the Mac, but keep the guard local too) --
+build/
+*.o
+
+# --- python tooling leftovers ---------------------------------------------
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Kevin's cross-project trash-bin convention (never a source of truth) -
+\!scrap/
+
+# --- OS noise --------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# SSH
+ssh_config
+/ssh_config
