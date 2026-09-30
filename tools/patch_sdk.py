@@ -16,6 +16,8 @@ SDK = pathlib.Path(sys.argv[1] if len(sys.argv) > 1
                    else pathlib.Path.home() / "ios/sdks/iPhoneOS9.3.sdk")
 
 SYMBOLS = [
+    # core mem* (added after _memcpy turned up missing building mg_probe)
+    "_memcpy", "_memmove", "_memset", "_memcmp", "_bzero", "_bcopy",
     "_memccpy", "_memchr", "_memmem", "_stpcpy", "_stpncpy", "_strcasecmp",
     "_strcasestr", "_strcat", "_strcmp", "_strcspn", "_strdup", "_strlcat",
     "_strlcpy", "_strncasecmp", "_strncat", "_strncmp", "_strncpy",
@@ -25,7 +27,7 @@ SYMBOLS = [
 
 tbd = SDK / "usr/lib/libSystem.B.tbd"
 text = tbd.read_text()
-if "_strcmp," in text or "_strcmp ]" in text:
+if "_memcpy," in text or "_memcpy ]" in text:
     print("libSystem.B.tbd: already patched")
 else:
     block = ("  - archs:             [ armv7, armv7s, arm64 ]\n"
