@@ -43,16 +43,19 @@ TLDR: 8.4.1 is the last version that can activate on the 9900\*s, but it can onl
 
 TLDR: a cellular 4S phones apple for a baseband activation ticket on every boot; wifi-only devices (ipod touch, wifi ipad) skip that and self-activate locally. make the 4S take the wifi-only path and it boots offline.
 
-- first rule out the nightmare one: is this iCloud / Find-My (FMiP) lock? nomobactivationd logs `NOT enrolled in FMiP`. it's plain **cellular** activation, which is a software decision, not a server-side ownership lock
-- watch mobactivationd on boot: sees `HasBaseband=true`sets `should_hactivate=false`calls out to `albert.apple.com` for a baseband ticket. no network, no ticket, no homescreen
+- first rule out the nightmare one: is this iCloud / Find-My (FMiP) lock? no -> mobactivationd logs `NOT enrolled in FMiP`. it's plain **cellular** activation, which is a software decision, not a server-side ownership lock
+
+- watch mobactivationd on boot: sees `HasBaseband=true` -> sets `should_hactivate=false` -> calls out to `albert.apple.com` for a baseband ticket. no network, no ticket, no homescreen
+
 - the wifi-only path instead reads a MobileGestalt flag `ShouldHactivate=true` and logs `Short circuiting activation state to Activated` locally, no server. that's the path we want
+
 - how does the daemon actually decide? disassemble the relevant stretch of mobactivationd (thumb-2, armv7 - snippet saved in Thumb.txt) to see which gestalt keys drive it, then hook `MGCopyAnswer` to LOG every key it reads on boot: HasBaseband, ShouldHactivate, DeviceClass, ProductType...
-- try faking DeviceClass / ProductType to look like a non-phonedoes NOT flip has_telephony, daemon still demands the ticket
-- try forcing just `ShouldHactivate`truedaemon logs `Short circuiting activation state to Activated`. single lever found
+- try faking DeviceClass / ProductType to look like a non-phone -> does NOT flip has_telephony, daemon still demands the ticket
+- try forcing just `ShouldHactivate` -> true -> daemon logs `Short circuiting activation state to Activated`. single lever found
 - build a tiny dylib (`actfix/hook_mg.c`) that fishhook-rebinds `MGCopyAnswer`: if the key is "ShouldHactivate" return true, otherwise call through to the real one. scope it to ONLY mobactivationd via a `DYLD_INSERT_LIBRARIES` line in that one daemon's launchd plist - nothing else on the device is touched
 - don't gamble on a bad boot: prove the shim live first. copy the plist to /tmp, `launchctl unload/load/start` the daemon from there, read its log. system files stay untouched until it's confirmed. (also drop a /tmp marker in the dylib's constructor to confirm DYLD_INSERT is even honored for this daemon - it is)
-- build on the mac: `clang -dynamiclib -target armv7-apple-ios8.0 -isysroot <9.3 sdk> -framework CoreFoundation hook_mg.c fishhook.c -o actfix_mg.dylib`push to /usr/lib, `ldid -S`, chmod 755back up the original plist to /var/root/mad_orig.plist firstdrop in the modified plist
-- reboot in Airplane Modeboots straight to the homescreen, no network, no activation screen. that was the whole point
+- build on the mac: `clang -dynamiclib -target armv7-apple-ios8.0 -isysroot <9.3 sdk> -framework CoreFoundation hook_mg.c fishhook.c -o actfix_mg.dylib` -> push to /usr/lib, `ldid -S`, chmod 755 -> back up the original plist to /var/root/mad_orig.plist first -> drop in the modified plist
+- reboot in Airplane Mode -> boots straight to the homescreen, no network, no activation screen. that was the whole point
 - fully reversible: restore mad_orig.plist, `rm` the dylib, reboot, reactivate once over wifi and you're back to stock.
 
 <br><br>
@@ -84,9 +87,9 @@ that makes the whole project actually usable in the field.
 ## 2. How it's built (no Xcode, no WSL)
 
 Windows PC can't link armv7 Mach-O, so a **2015 MacBook Pro is the build
-server** over SSH. Flow: source on the PC`deploy.py` copies it to the Mac
-Apple clang + real `ld64` build armv7/iOS 8bundle relayed backpushed
-to the phone`ldid` pseudo-signs on the phone`uicache`.
+server** over SSH. Flow: source on the PC -> `deploy.py` copies it to the Mac
+-> Apple clang + real `ld64` build armv7/iOS 8 -> bundle relayed back -> pushed
+to the phone -> `ldid` pseudo-signs on the phone -> `uicache`.
 
 - Toolchain (Windows side): `toolchain/` - clang + inspection tools + the iOS
   9.3 SDK, all rebuildable by `tools/setup_toolchain.py`. (Now mostly a relic;
@@ -111,8 +114,8 @@ Builds (tests must pass), installs over SSH, resprings. ~15 s.
   `ssh -F ssh_config iphone`.
 - **USB port 22 is ALWAYS refused** - the phone's sshd binds the Wi-Fi
   interface, not loopback. Don't chase it.
-- **The phone's Wi-Fi sleeps when the screen locks**SSH just times out.
-  Keep it **unlocked and awake** (Auto-LockNever) while working, or you'll
+- **The phone's Wi-Fi sleeps when the screen locks** -> SSH just times out.
+  Keep it **unlocked and awake** (Auto-Lock -> Never) while working, or you'll
   think it's dead when it isn't.
 - **USB tools** (in `<scratchpad>/imd/`, bundled libimobiledevice, no iTunes
   needed): `idevice_id -l`, `ideviceinfo -k ActivationState`,
@@ -139,7 +142,7 @@ this by reading MobileGestalt **`ShouldHactivate` = true** and
 
 **Fix:** a tiny shim (`actfix/hook_mg.c` + fishhook) injected into **only**
 `mobactivationd` via `DYLD_INSERT_LIBRARIES` in its launch plist. It forces
-`MGCopyAnswer("ShouldHactivate")`true. The daemon then logs
+`MGCopyAnswer("ShouldHactivate")` -> true. The daemon then logs
 `Short circuiting activation state to Activated` - offline, no server. Nothing
 else on the device is affected.
 
