@@ -1,0 +1,101 @@
+@ Thumb-2 disassembly of mobactivationd (iOS 8.4.1, armv7), the stretch that
+@ reads ShouldHactivate. Dumped with llvm-objdump.
+
+   15282:      	cmp	r4, #0x0
+   15284:      	itt	ne
+   15286:      	movne	r0, r4
+   15288:      	blxne	0x63e10 <dyld_stub_binder+0x63e10> @ imm = #0x4eb84
+   1528c:      	ldr	r0, [sp, #0x24]
+   1528e:      	cmp	r0, #0x0
+   15290:      	it	ne
+   15292:      	blxne	0x63e10 <dyld_stub_binder+0x63e10> @ imm = #0x4eb7c
+   15296:      	mov	r0, r6
+   15298:      	b	0x154ea <__text+0xe2fa> @ imm = #0x24e
+   1529a:      	str.w	r8, [sp, #0x14]
+   1529e:      	str	r4, [sp, #0x20]
+   152a0:      	movw	r0, #0x81e5
+   152a4:      	movt	r0, #0x3
+   152a8:      	movw	r2, #0x821a
+   152ac:      	movt	r2, #0x3
+   152b0:      	add	r0, pc
+   152b2:      	add	r2, pc
+   152b4:      	b	0x152d0 <__text+0xe0e0> @ imm = #0x18
+   152b6:      	str.w	r8, [sp, #0x14]
+   152ba:      	str	r4, [sp, #0x20]
+   152bc:      	movw	r0, #0x81c9
+   152c0:      	movt	r0, #0x3
+   152c4:      	movw	r2, #0x8212
+   152c8:      	movt	r2, #0x3
+   152cc:      	add	r0, pc
+   152ce:      	add	r2, pc
+   152d0:      	movs	r1, #0x0
+   152d2:      	str	r1, [sp, #0x10]
+   152d4:      	movs	r1, #0x0
+   152d6:      	bl	0x10638 <__text+0x9448> @ imm = #-0x4ca2
+   152da:      	movw	r8, #0x22e6
+   152de:      	movs	r0, #0x0
+   152e0:      	movt	r8, #0x5
+   152e4:      	str	r0, [sp, #0x18]
+   152e6:      	add	r8, pc
+   152e8:      	mov	r5, r11
+   152ea:      	movs	r0, #0x0
+   152ec:      	str	r0, [sp, #0x28]
+   152ee:      	str.w	r10, [sp, #0x24]
+   152f2:      	movw	r0, #0xf0c8
+   152f6:      	movt	r0, #0x4
+   152fa:      	ldr	r6, [sp, #0x20]
+   152fc:      	add	r0, pc
+   152fe:      	movs	r1, #0x0
+   15300:      	ldr	r0, [r0]
+   15302:      	ldr	r4, [r0]
+   15304:      	mov	r0, r6
+   15306:      	mov	r2, r4
+   15308:      	bl	0x11c54 <__text+0xaa64> @ imm = #-0x36b8
+   1530c:      	mov	r11, r0
+   1530e:      	cmp	r5, r11
+   15310:      	beq	0x1533c <__text+0xe14c> @ imm = #0x28
+   15312:      	movw	r0, #0x8171
+   15316:      	movs	r1, #0x0
+   15318:      	movt	r0, #0x3
+   1531c:      	movw	r2, #0x82b1
+   15320:      	movt	r2, #0x3
+   15324:      	add	r0, pc
+   15326:      	add	r2, pc
+   15328:      	mov	r3, r11
+   1532a:      	str	r5, [sp]
+   1532c:      	bl	0x10638 <__text+0x9448> @ imm = #-0x4cf8
+   15330:      	mov	r0, r6
+   15332:      	movs	r1, #0x0
+   15334:      	mov	r2, r4
+   15336:      	mov	r3, r5
+   15338:      	bl	0x11460 <__text+0xa270> @ imm = #-0x3edc
+   1533c:      	movw	r0, #0xf172
+   15340:      	mov	r10, r6
+   15342:      	movt	r0, #0x4
+   15346:      	movw	r1, #0x1fdc
+   1534a:      	add	r0, pc
+   1534c:      	movt	r1, #0x5
+   15350:      	add	r1, pc
+   15352:      	ldr	r0, [r0]
+   15354:      	ldr	r2, [r0]
+   15356:      	mov	r0, r6
+   15358:      	bl	0x11c54 <__text+0xaa64> @ imm = #-0x3708
+   1535c:      	ldr	r4, [sp, #0x18]
+   1535e:      	mov	r5, r0
+   15360:      	cmp	r5, #0x0
+   15362:      	bne	0x153e2 <__text+0xe1f2> @ imm = #0x7c
+   15364:      	cmp	r4, #0x0
+   15366:      	beq	0x153e2 <__text+0xe1f2> @ imm = #0x78
+   15368:      	str.w	r8, [sp, #0xc]
+   1536c:      	movw	r0, #0x8119
+   15370:      	movt	r0, #0x3
+   15374:      	movw	r2, #0x827e
+   15378:      	movt	r2, #0x3
+   1537c:      	add	r0, pc
+   1537e:      	add	r2, pc
+   15380:      	movs	r1, #0x0
+   15382:      	bl	0x10638 <__text+0x9448> @ imm = #-0x4d4e
+   15386:      	movw	r0, #0xf150
+   1538a:      	mov	r8, r4
+   1538c:      	movt	r0, #0x4
+   15390:      	add	r0, pc

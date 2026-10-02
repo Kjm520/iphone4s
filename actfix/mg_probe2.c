@@ -1,5 +1,5 @@
 // Probe that calls MGCopyAnswer via the LINKED symbol (not dlsym), so a
-// fishhook rebind of that symbol takes effect here — used to validate the
+// fishhook rebind of that symbol takes effect here - used to validate the
 // hook dylib before it goes anywhere near the boot daemon.
 #include <CoreFoundation/CoreFoundation.h>
 #include <stdio.h>

@@ -1,0 +1,1 @@
+llvm-objdump -d --x86-asm-syntax=intel --no-show-raw-insn add.o

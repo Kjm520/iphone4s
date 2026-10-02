@@ -1,4 +1,4 @@
-// Host-side unit test for Geo.c — runs natively on the build Mac (make test).
+// Host-side unit test for Geo.c - runs natively on the build Mac (make test).
 // Reference values generated independently with PROJ (pyproj) for UTM and
 // NGA GEOTRANS (python mgrs) for MGRS strings; see tools history in repo.
 #include "Geo.h"

@@ -298,7 +298,7 @@ static NSString *const kFormatKey = @"coordFormat";
         self.arrow.color = [UIColor darkGrayColor];
         self.navLabel.text = t
             ? [NSString stringWithFormat:@"→ %@ (no fix)", t.name]
-            : @"no target — pick from PINS\n(Map Bag adds & edits pins)";
+            : @"no target - pick from PINS\n(Map Bag adds & edits pins)";
         return;
     }
     CLLocation *dest = [[CLLocation alloc] initWithLatitude:t.lat longitude:t.lon];
