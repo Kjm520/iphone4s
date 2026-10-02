@@ -4,7 +4,7 @@ A jailbroken, activation-locked iPhone 4S (iOS 8.4.1, armv7, IMEI 9900\*) rebuil
 fully **offline** survival instrument: GPS, offline topo map, sensors, and -
 most importantly - **it works with the activation lock bug**.
 
-Requirements: [LLVM](https://github.com/llvm/llvm-project) (suggested winget LLVM.LLVM), [fishhook](https://github.com/facebook/fishhook), iPhoneOS 9.3 SDK, SSH for iPhone, SSH or physical access to a Mac, [Legacy iOS Kit](https://github.com/LukeZGD/Legacy-iOS-Kit), [check-m8 A5](https://github.com/LukeZGD/Legacy-iOS-Kit/wiki/checkm8-a5), Claude or equivalent for the LLVM and thumb-2
+Requirements: [LLVM](https://github.com/llvm/llvm-project) (suggested winget LLVM.LLVM), [fishhook](https://github.com/facebook/fishhook), iPhoneOS 9.3 SDK, SSH for iPhone, SSH or physical access to a Mac, [Legacy iOS Kit](https://github.com/LukeZGD/Legacy-iOS-Kit), [check-m8 A5](https://github.com/LukeZGD/Legacy-iOS-Kit/wiki/checkm8-a5), Claude or equivalent for the LLVM and thumb-2, [ldid](https://github.com/ProcursusTeam/ldid)
 
 <br>
 
