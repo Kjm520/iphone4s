@@ -4,7 +4,7 @@ A jailbroken, activation-locked iPhone 4S (iOS 8.4.1, armv7, IMEI 9900\*) rebuil
 fully **offline** survival instrument: GPS, offline topo map, sensors, and -
 most importantly - **it works with the activation lock bug**.
 
-Requirements: LLVM, iPhoneOS 9.3 SDK, SSH for iPhone, SSH or physical access to a Mac, Legacy iOS Kit, Claude or equivalent for the LLVM and thumb-2
+Requirements: [LLVM](https://github.com/llvm/llvm-project) (suggested winget LLVM.LLVM), [fishhook](https://github.com/facebook/fishhook), iPhoneOS 9.3 SDK, SSH for iPhone, SSH or physical access to a Mac, [Legacy iOS Kit](https://github.com/LukeZGD/Legacy-iOS-Kit), [check-m8 A5](https://github.com/LukeZGD/Legacy-iOS-Kit/wiki/checkm8-a5), Claude or equivalent for the LLVM and thumb-2
 
 <br>
 
@@ -52,7 +52,7 @@ TLDR: a cellular 4S phones apple for a baseband activation ticket on every boot;
 - how does the daemon actually decide? disassemble the relevant stretch of mobactivationd (thumb-2, armv7 - snippet saved in Thumb.txt) to see which gestalt keys drive it, then hook `MGCopyAnswer` to LOG every key it reads on boot: HasBaseband, ShouldHactivate, DeviceClass, ProductType...
 - try faking DeviceClass / ProductType to look like a non-phone -> does NOT flip has_telephony, daemon still demands the ticket
 - try forcing just `ShouldHactivate` -> true -> daemon logs `Short circuiting activation state to Activated`. single lever found
-- build a tiny dylib (`actfix/hook_mg.c`) that fishhook-rebinds `MGCopyAnswer`: if the key is "ShouldHactivate" return true, otherwise call through to the real one. scope it to ONLY mobactivationd via a `DYLD_INSERT_LIBRARIES` line in that one daemon's launchd plist - nothing else on the device is touched
+- build a tiny dylib (`actfix/hook_mg.c`) that [fishhook](https://github.com/facebook/fishhook)-rebinds `MGCopyAnswer`: if the key is "ShouldHactivate" return true, otherwise call through to the real one. scope it to ONLY mobactivationd via a `DYLD_INSERT_LIBRARIES` line in that one daemon's launchd plist - nothing else on the device is touched
 - don't gamble on a bad boot: prove the shim live first. copy the plist to /tmp, `launchctl unload/load/start` the daemon from there, read its log. system files stay untouched until it's confirmed. (also drop a /tmp marker in the dylib's constructor to confirm DYLD_INSERT is even honored for this daemon - it is)
 - build on the mac: `clang -dynamiclib -target armv7-apple-ios8.0 -isysroot <9.3 sdk> -framework CoreFoundation hook_mg.c fishhook.c -o actfix_mg.dylib` -> push to /usr/lib, `ldid -S`, chmod 755 -> back up the original plist to /var/root/mad_orig.plist first -> drop in the modified plist
 - reboot in Airplane Mode -> boots straight to the homescreen, no network, no activation screen. that was the whole point
