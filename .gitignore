@@ -42,3 +42,4 @@ saved/
 # Runtime GPS/user data
 status.json
 waypoints.plist
+/machinecode_learning
