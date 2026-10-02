@@ -1,5 +1,7 @@
 """Harvest USGS Topo tiles into an MBTiles file for the offline Map Bag app.
 
+*** DEFAULT VALUES ARE BIRMINGHAM, AL ***
+
 Usage:
     python tools/harvest_tiles.py                 # all phases, resumable
     python tools/harvest_tiles.py --phases base   # just the named phases

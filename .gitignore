@@ -30,3 +30,15 @@ desktop.ini
 ssh_config
 /ssh_config
 /.ssh
+
+
+# Device-specific/private state
+activation-*.tar
+activation-*.tgz
+backup_activation/
+saved/
+*.mobileprovision
+
+# Runtime GPS/user data
+status.json
+waypoints.plist
