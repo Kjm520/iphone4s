@@ -104,7 +104,7 @@ Builds (tests must pass), installs over SSH, resprings. ~15 s.
 
 <br><br>
 
-## 3. Getting into the phone (READ THIS - it wasted hours)
+## 3. Getting into the phone
 
 - **SSH is over Wi-Fi only.** Host alias `iphone` = `root@<phone-lan-ip>`,
   config in `ssh_config` (has the required `HostKeyAlgorithms +ssh-rsa`).
