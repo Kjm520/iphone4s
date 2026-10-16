@@ -207,12 +207,3 @@ ssh_config  host aliases: iphone, mac
 ```
 
 <br><br>
-
-## 8. Security note
-
-When done working, SSH keys can be revoked again (phone `authorized_keys` +
-the local keypair) - just ask. Keep the phone's Wi-Fi **off** in the bag: GPS
-doesn't need it, and an unreachable radio is the only perfect firewall.
-
-_One phone Apple wrote off, rebuilt from a Windows PC, a junk MacBook, and SSH.
-It powers on and works with zero connectivity. That was the whole point._
