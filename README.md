@@ -12,6 +12,8 @@ Requirements: [LLVM](https://github.com/llvm/llvm-project) (suggested winget LLV
 
 ### Objective
 
+Apple has psuedo-forced obsolescence on the 9900* 4s. The bug prevents persisting an activated state, cellular not available, login methods do not work, and activation servers either DNE or are broken and deprecated, and the blocking nature of the activation lock prevents ANY use.
+
 Make use of this old device's GPS functionality with offline maps so it can go in my emergency survival bag and will be useable without any network connection.
 
 TLDR: 8.4.1 is the last version that can activate on the 9900\*s, but it can only be done with network connection, on every launch. Meaning that when fully offline, the device cannot activate on a fresh boot.
